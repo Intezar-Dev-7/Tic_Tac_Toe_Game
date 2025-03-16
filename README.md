@@ -1,16 +1,34 @@
-# tic_tac_toe
 
-A new Flutter project.
+## Multiplayer Tic-Tac-Toe Game ##
 
-## Getting Started
+A fully responsive and multiplayer-enabled Tic-Tac-Toe game that works seamlessly on Android, iOS, and Web! Play in real-time with friends or strangers, track your points, and enjoy a fun, interactive, and visually appealing experience.
 
-This project is a starting point for a Flutter application.
+## Features ##
+Create/Join Room: Easily create a new game room or join an existing one.
 
-A few resources to get you started if this is your first Flutter project:
+Real-time Gameplay: Play against another player in real-time.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Display Points: Track and display player points.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Round & Game Winner: Displays the winner of each round and the overall game.
+
+Responsive Glow-Themed UI: A glowing, vibrant user interface that looks great on all devices.
+
+Cross-Platform Game: Works across Android, iOS, and Web platforms.
+
+## Technologies Used ##
+## Frontend ##
+Flutter
+
+Provider
+
+## Backend ##
+Node.js
+
+Express.js
+
+Socket.io
+
+Mongoose
+
+MongoDB
