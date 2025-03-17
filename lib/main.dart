@@ -1,4 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:tic_tac_toe/provider/room_data_provider.dart';
+import 'package:tic_tac_toe/screens/create_room_screen.dart';
+import 'package:tic_tac_toe/screens/game_screen.dart';
+import 'package:tic_tac_toe/screens/join_room_screen.dart';
+import 'package:tic_tac_toe/screens/main_menu_screen.dart';
+import 'package:tic_tac_toe/utils/colors.dart';
 
 void main() {
   runApp(const MyApp());
@@ -9,24 +16,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      ),
-      home: MyHomePage(),
-    );
-  }
-}
-
-class MyHomePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-
-        title: Text('Game'),
+    return ChangeNotifierProvider(
+      create: (context) => RoomDataProvider(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Tic Tac Toe',
+        theme: ThemeData.dark().copyWith(scaffoldBackgroundColor: bgColor),
+        routes: {
+          MainMenuScreen.routeName: (context) => const MainMenuScreen(),
+          JoinRoomScreen.routeName: (context) => const JoinRoomScreen(),
+          CreateRoomScreen.routeName: (context) => const CreateRoomScreen(),
+          GameScreen.routeName: (context) => const GameScreen(),
+        },
+        initialRoute: MainMenuScreen.routeName,
       ),
     );
   }
