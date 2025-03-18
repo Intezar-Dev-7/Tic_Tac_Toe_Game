@@ -50,9 +50,9 @@ class _CreateRoomScreenState extends State<CreateRoomScreen> {
               SizedBox(height: size.height * 0.08),
 
               // Custom TextField
-              CustomTextfield(
+              CustomTextField(
                 controller: _nameController,
-                text: 'Enter your username',
+                hintText: 'Enter your username',
                 focusNode: _nameFocus,
               ),
               SizedBox(height: size.height * 0.045),

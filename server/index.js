@@ -48,8 +48,86 @@ io.on("connection", (socket) => {
         } catch (e) {
             console.log(e);
         }
-        // player is taken to the next screen
+
     });
+
+    // 
+    socket.on('joinRoom', async ({ username, roomId }) => {
+        console.log(username, roomId);
+        try {
+            if (!roomId.match(/^[0-9a-fA-F]{24}$/)) {
+                socket.emit('errorOccurred, Please enter a valid room id');
+                return;
+            }
+            let room = await Room.findById(roomId);
+            if (room.isJoin) {
+                let player = {
+                    username,
+                    socketID: socket.id,
+                    playerType: 'O'
+                }
+                socket.join(roomId);
+                room.players.push(player);
+                room.isJoin = false;
+
+                room = await room.save();
+                io.to(roomId).emit('joinRoomSuccess', room);
+                io.to(roomId).emit('updatePlayers', room.players);
+                // update the room 
+                io.to(roomId).emit('updateRoom', room);
+
+
+            } else {
+                socket.emit('errorOccurred, Game in progress , try agan later');
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    });
+
+
+    socket.on("tap", async ({ index, roomId }) => {
+        try {
+            let room = await Room.findById(roomId);
+
+            let choice = room.turn.playerType; // x or o
+            if (room.turnIndex == 0) {
+                room.turn = room.players[1];
+                room.turnIndex = 1;
+
+            }
+            else {
+                room.turn = room.players[0];
+                room.turnIndex = 0;
+
+            }
+            room = await room.save();
+            io.to(roomId).emit("tapped", {
+                index, choice, room,
+            });
+        } catch (e) {
+            console.log(e);
+        }
+    });
+
+    socket.on('winner', async ({ winnerSocketId, roomId }) => {
+        try {
+            let room = await Room.findById(roomId);
+            let player = room.players.find((player) => player.socketID == winnerSocketId);
+            player.points += 1;
+            room = await room.save();
+
+            if (player.points >= room.maxRounds) {
+                io.to(roomId).emit("endGame", player);
+            } else {
+                io.to(roomId).emit("pointIncrease", player);
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    });
+
+
 });
 
 mongoose.connect(DB).then(() => {

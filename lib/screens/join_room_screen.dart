@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tic_tac_toe/resources/socket_methods.dart';
 import 'package:tic_tac_toe/responsive/responsive.dart';
 import 'package:tic_tac_toe/widgets/custom_button.dart';
 import 'package:tic_tac_toe/widgets/custom_text.dart';
@@ -18,6 +19,16 @@ class _JoinRoomScreenState extends State<JoinRoomScreen> {
 
   final FocusNode _nameFocus = FocusNode();
   final FocusNode _gameIdFocus = FocusNode();
+
+  final SocketMethods _socketMethods = SocketMethods();
+
+  @override
+  void initState() {
+    super.initState();
+    _socketMethods.joinRoomSuccessListener(context);
+    _socketMethods.errorOccurredListener(context);
+    _socketMethods.updatePlayersStateListener(context);
+  }
 
   @override
   void dispose() {
@@ -47,19 +58,26 @@ class _JoinRoomScreenState extends State<JoinRoomScreen> {
               SizedBox(height: size.height * 0.08),
 
               // Custom TextField
-              CustomTextfield(
+              CustomTextField(
                 controller: _nameController,
-                text: 'Enter your username',
+                hintText: 'Enter your username',
                 focusNode: _nameFocus,
               ),
               SizedBox(height: 20),
-              CustomTextfield(
+              CustomTextField(
                 controller: _gameIdController,
-                text: 'Enter Game Id',
+                hintText: 'Enter Game Id',
                 focusNode: _gameIdFocus,
               ),
               SizedBox(height: size.height * 0.08),
-              CustomButton(onTap: () {}, text: 'Join'),
+              CustomButton(
+                onTap:
+                    () => _socketMethods.joinRoom(
+                      _nameController.text,
+                      _gameIdController.text,
+                    ),
+                text: 'Join',
+              ),
             ],
           ),
         ),

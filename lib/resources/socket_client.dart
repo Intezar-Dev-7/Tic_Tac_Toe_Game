@@ -7,8 +7,8 @@ class SocketClient {
   // Private constructor to enforce singleton pattern
   SocketClient._internal() {
     // Initialize the socket connection
-    socket = IO.io('http://10.0.0.27:3000', <String, dynamic>{
-      'transports': ['websocket'], // Use WebSocket for communication
+    socket = IO.io('http://10.0.0.34:3000', <String, dynamic>{
+      'transports': <String>['websocket'], // Use WebSocket for communication
       'autoConnect': false, // Prevent automatic connection on instance creation
     });
 

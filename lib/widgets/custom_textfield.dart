@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:tic_tac_toe/utils/colors.dart';
 
-class CustomTextfield extends StatelessWidget {
+class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
-  final String text;
+  final String hintText;
   final FocusNode focusNode;
-  const CustomTextfield({
+  final bool isReadOnly;
+
+  const CustomTextField({
     super.key,
     required this.controller,
-    required this.text,
+    required this.hintText,
     required this.focusNode,
+    this.isReadOnly = false,
   });
 
   @override
@@ -21,7 +24,7 @@ class CustomTextfield extends StatelessWidget {
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(17)),
         fillColor: bgColor,
         filled: true,
-        hintText: text,
+        hintText: hintText,
       ),
     );
   }
