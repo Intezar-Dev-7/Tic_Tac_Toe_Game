@@ -143,3 +143,5 @@ Quick Analogy:
 - socket.io is like a telephone network 📞 – it establishes the connection.
 - socket.on is like answering a call 📲 – it listens for messages. 
 */
+
+
