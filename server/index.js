@@ -17,7 +17,7 @@ var io = require('socket.io')(server); // Setting up socket.io for real-time com
 app.use(express.json());
 
 // MongoDB connection string
-const DB = "mongodb+srv://intezar:test1234@cluster0.dy6zb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+const DB = "mongodb+srv://<name>:<password>@cluster0.dy6zb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
 // Setting up socket.io connection event
 io.on("connection", (socket) => {
