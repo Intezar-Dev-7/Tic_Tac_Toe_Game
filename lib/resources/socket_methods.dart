@@ -8,10 +8,15 @@ import 'package:tic_tac_toe/screens/game_screen.dart';
 import 'package:tic_tac_toe/utils/utils.dart';
 
 class SocketMethods {
+  // Getting the singleton instance of the socket client
   final _socketClient = SocketClient.instance.socket!;
 
+  // Getter to expose the socket instance
   Socket get socketClient => _socketClient;
-  // Emits
+
+  // ------------------ SOCKET EMITS (Sending Data to Server) ------------------
+
+  // Emit an event to create a new game room
   void createRoom(String username) {
     if (username.isNotEmpty) {
       _socketClient.emit('createRoom', {'username': username});
@@ -19,19 +24,23 @@ class SocketMethods {
     }
   }
 
+  // Emit an event to join an existing game room
   void joinRoom(String username, String roomId) {
     if (username.isNotEmpty && roomId.isNotEmpty) {
       _socketClient.emit('joinRoom', {'username': username, 'roomId': roomId});
     }
   }
 
+  // Emit an event when a player taps on a grid cell
   void tapGrid(int index, String roomId, List<String> displayElements) {
     if (displayElements[index] == '') {
       _socketClient.emit('tap', {'index': index, 'roomId': roomId});
     }
   }
 
-  // Listeners
+  // ------------------ SOCKET LISTENERS (Receiving Data from Server) ------------------
+
+  // Listen for a successful room creation and navigate to the game screen
   void createRoomSuccessListener(BuildContext context) {
     _socketClient.on('createRoomSuccess', (room) {
       Provider.of<RoomDataProvider>(
@@ -42,6 +51,7 @@ class SocketMethods {
     });
   }
 
+  // Listen for a successful room join and navigate to the game screen
   void joinRoomSuccessListener(BuildContext context) {
     _socketClient.on('joinRoomSuccess', (room) {
       Provider.of<RoomDataProvider>(
@@ -52,12 +62,14 @@ class SocketMethods {
     });
   }
 
+  // Listen for error messages and display them as a snackbar
   void errorOccurredListener(BuildContext context) {
     _socketClient.on('errorOccurred', (data) {
       showSnackBar(context, data);
     });
   }
 
+  // Listen for updates to the player states (e.g., when a new player joins)
   void updatePlayersStateListener(BuildContext context) {
     _socketClient.on('updatePlayers', (playerData) {
       Provider.of<RoomDataProvider>(
@@ -71,6 +83,7 @@ class SocketMethods {
     });
   }
 
+  // Listen for updates to the room state (e.g., game progress)
   void updateRoomListener(BuildContext context) {
     _socketClient.on('updateRoom', (data) {
       Provider.of<RoomDataProvider>(
@@ -80,6 +93,7 @@ class SocketMethods {
     });
   }
 
+  // Listen for a grid tap event and update the board accordingly
   void tappedListener(BuildContext context) {
     _socketClient.on('tapped', (data) {
       RoomDataProvider roomDataProvider = Provider.of<RoomDataProvider>(
@@ -92,6 +106,7 @@ class SocketMethods {
     });
   }
 
+  // Listen for point increases when a player wins a round
   void pointIncreaseListener(BuildContext context) {
     _socketClient.on('pointIncrease', (playerData) {
       var roomDataProvider = Provider.of<RoomDataProvider>(
@@ -106,6 +121,7 @@ class SocketMethods {
     });
   }
 
+  // Listen for the end of the game and display a winner dialog
   void endGameListener(BuildContext context) {
     _socketClient.on("endGame", (playerData) {
       showGameDialog(context, '${playerData['username']} won the game!!');
