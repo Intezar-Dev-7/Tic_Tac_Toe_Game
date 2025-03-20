@@ -4,8 +4,8 @@ import 'package:tic_tac_toe/provider/room_data_provider.dart';
 import 'package:tic_tac_toe/resources/socket_methods.dart';
 
 import 'package:tic_tac_toe/utils/colors.dart';
-import 'package:tic_tac_toe/views/scoreboard.dart';
-import 'package:tic_tac_toe/views/tictactoe_board.dart';
+import 'package:tic_tac_toe/widgets/scoreboard.dart';
+import 'package:tic_tac_toe/widgets/tictactoe_board.dart';
 import 'package:tic_tac_toe/widgets/waiting_lobby.dart';
 
 class GameScreen extends StatefulWidget {

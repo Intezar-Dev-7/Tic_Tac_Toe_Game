@@ -8,7 +8,7 @@ class RoomDataProvider extends ChangeNotifier {
   Map<String, dynamic> _roomData = {};
 
   // Represents the Tic-Tac-Toe board with 9 empty slots initially.
-  List<String> _displayElement = ['', '', '', '', '', '', '', '', ''];
+  final List<String> _displayElement = ['', '', '', '', '', '', '', '', ''];
 
   // Keeps track of the number of filled boxes in the game.
   int _filledBoxes = 0;

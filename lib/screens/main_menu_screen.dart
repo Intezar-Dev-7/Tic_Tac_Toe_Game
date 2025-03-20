@@ -25,6 +25,12 @@ class MainMenuScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Image(
+                image: AssetImage('assets/images/onBoardingImage.png'),
+                width: 150,
+              ),
+              SizedBox(height: 60),
+
               CustomButton(
                 onTap: () => createRoom(context),
                 text: 'Create Room',
